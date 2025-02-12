@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = MainEntity.TABLE_NAME)
 data class MainEntity(
+    @ColumnInfo(name = COLUMN_NAME) val name:String,
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = COLUMN_ID) val id: Int? = null,
-    @ColumnInfo(name = COLUMN_NAME) val name:String,
 ) {
     companion object {
         const val TABLE_NAME = "main_table"

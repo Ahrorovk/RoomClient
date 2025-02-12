@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.compose)
+//    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -32,6 +33,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -41,6 +45,13 @@ android {
 }
 
 dependencies {
+    ksp(libs.symbol.processing.api) // Обновите до актуальной версии
+
+    // Hilt
+    implementation(libs.com.google.dagger.hilt.android)
+    ksp(libs.com.google.dagger.hilt.android.compiler)
+    ksp(libs.com.google.dagger.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     //Coroutines
     implementation(libs.coroutines.android)
@@ -53,6 +64,9 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.room.paging)
 
+    implementation(libs.javapoet) // или последняя доступная версия
+
+    implementation(platform(libs.androidx.compose.bom.v20250200))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

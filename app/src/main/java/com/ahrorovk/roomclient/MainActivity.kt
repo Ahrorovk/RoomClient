@@ -17,33 +17,17 @@ import com.ahrorovk.roomclient.main.MainDao
 import com.ahrorovk.roomclient.main.MainDatabase
 import com.ahrorovk.roomclient.main.MainEntity
 import com.ahrorovk.roomclient.ui.theme.RoomClientTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    lateinit var mainDao: MainDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        var names: List<MainEntity> = emptyList()
         setContent {
-            LaunchedEffect(true) {
-                val mainDatabase = MainDatabase.getInstance(application.applicationContext)
-                mainDao = mainDatabase.mainDao()
-                mainDao.insert(MainEntity(null, "SunnatikGay"))
-
-                delay(5000L)
-                names = mainDao.getAllUsers() ?: emptyList()
-            }
             RoomClientTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column() {
-                        names.forEach { it->
-                            Greeting(
-                                name = "${it.id}: ${it.name}",
-                                modifier = Modifier.padding(innerPadding)
-                            )
-                        }
-                    }
+                Scaffold(modifier = Modifier.fillMaxSize()) { _ ->
+                    MainScreen()
                 }
             }
         }
